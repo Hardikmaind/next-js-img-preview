@@ -7,7 +7,11 @@ function ImageUpload() {
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
-    const imgname = event.target.files[0].name;
+    if (!file) {
+      return; // Exit early if no file is selected
+    }
+    const imgname = file.name;
+
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
@@ -78,9 +82,17 @@ function ImageUpload() {
         </label>
         <div onClick={handleClick} style={{ cursor: "pointer" }}>
           {image ? (
-            <img src={URL.createObjectURL(image)} alt="upload image" className="img-display-after" />
+            <img
+              src={URL.createObjectURL(image)}
+              alt="upload image"
+              className="img-display-after"
+            />
           ) : (
-            <img src="./photo.png" alt="upload image" className="img-display-before" />
+            <img
+              src="./photo.png"
+              alt="upload image"
+              className="img-display-before"
+            />
           )}
 
           <input
